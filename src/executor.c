@@ -421,3 +421,28 @@ void drop_database(const char* db_name) {
         current_db[0] = '\0';
     }
 }
+void show_databases(void) {
+    const char* path = "data";
+    WIN32_FIND_DATA fd;
+    HANDLE hFind;
+    char search_path[256];
+    snprintf(search_path, sizeof(search_path), "%s\\*", path);
+
+    hFind = FindFirstFile(search_path, &fd);
+    if (hFind == INVALID_HANDLE_VALUE) {
+        printf("No databases found.\n");
+        return;
+    }
+
+    printf("Databases:\n");
+
+    do {
+        if ((fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) &&
+            strcmp(fd.cFileName, ".") != 0 &&
+            strcmp(fd.cFileName, "..") != 0) {
+            printf("- %s\n", fd.cFileName);
+        }
+    } while (FindNextFile(hFind, &fd));
+
+    FindClose(hFind);
+}

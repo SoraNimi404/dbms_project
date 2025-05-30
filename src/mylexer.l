@@ -16,7 +16,7 @@ number  {digit}+
 %%
 
 "CREATE"        { return CREATE; }
-"DATABASE"      { return DATABASE; }
+
 "USE"           { return USE; }
 "TABLE"         { return TABLE; }
 "SHOW"          { return SHOW; }
@@ -34,7 +34,7 @@ number  {digit}+
 "EXIT"          { return EXIT; }
 "CHAR"          { return CHAR; }
 "INT"           { return INT; }
-
+"DATABASES"     { return DATABASES; }
 "="             { return EQ; }
 "!="            { return NE; }
 "<"             { return LT; }

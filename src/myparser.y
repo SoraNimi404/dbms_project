@@ -35,6 +35,7 @@ WhereClause select_where;
 %token SELECT FROM WHERE UPDATE SET DELETE DROP EXIT
 %token CHAR INT
 %token EQ NE LT GT
+%token DATABASES
 
 %%
 
@@ -62,6 +63,9 @@ statement:
         printf("Exit command received.\n");
         exit(0);
     }
+  | SHOW DATABASES ';' {
+      show_databases();
+    }
   ;
 
 create_database_stmt:
@@ -72,9 +76,9 @@ create_database_stmt:
   ;
 
 use_database_stmt:
-    USE DATABASE ID {
-        use_database($3);
-        free($3);
+    USE  ID {
+        use_database($2);
+        free($2);
     }
   ;
 

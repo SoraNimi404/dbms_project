@@ -5,6 +5,7 @@
 void create_database(const char* name);
 void use_database(const char* name);
 void insert_into_table(const char* table_name, char** values, int value_count);
+void show_databases(void);
 
 const char* get_current_db();
 
