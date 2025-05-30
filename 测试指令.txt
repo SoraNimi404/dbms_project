@@ -1,0 +1,44 @@
+win_bison -d myparser.y
+win_flex mylexer.l
+gcc myparser.tab.c lex.yy.c main.c executor.c -o ../dbms.exe
+CREATE TABLE Student (
+    Sno CHAR(9),
+    Sname CHAR(20),
+    Sage INT
+);
+
+CREATE DATABASE test;
+CREATE DATABASE www;
+USE DATABASE test;
+CREATE TABLE student (id INT, name CHAR(20));
+SHOW TABLES;
+INSERT INTO student VALUES (1, John);
+SELECT id, name FROM student WHERE id = 1;
+UPDATE student SET name = Mary WHERE id = 1;
+DELETE FROM student WHERE id = 1;
+DROP TABLE student;
+DROP DATABASE test;
+EXIT;
+
+
+CREATE DATABASE test;
+USE DATABASE test;
+SHOW TABLES;
+CREATE TABLE student (id INT, name CHAR(20));
+CREATE TABLE cxk_fans (id INT, name CHAR(20));
+
+INSERT INTO student VALUES (1, John);
+INSERT INTO student VALUES (2, Mary);
+INSERT INTO student VALUES (3, ikun);
+
+SELECT id, name FROM student;
+
+SELECT id, name FROM student WHERE id = 2;
+
+DELETE FROM student WHERE id = 1;
+
+UPDATE student SET name = cxk WHERE id = 2;
+
+DROP TABLE cxk_fans;
+DROP DATABASE www;
+EXIT;
