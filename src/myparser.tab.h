@@ -80,7 +80,10 @@ extern int yydebug;
     NE = 281,                      /* NE  */
     LT = 282,                      /* LT  */
     GT = 283,                      /* GT  */
-    DATABASES = 284                /* DATABASES  */
+    DATABASES = 284,               /* DATABASES  */
+    STAR = 285,                    /* STAR  */
+    AND = 286,                     /* AND  */
+    OR = 287                       /* OR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -93,7 +96,7 @@ union YYSTYPE
 
     char* str;
 
-#line 97 "myparser.tab.h"
+#line 100 "myparser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

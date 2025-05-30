@@ -38,6 +38,7 @@ WhereClause select_where;
 %token EQ NE LT GT
 %token DATABASES
 %token STAR
+%token AND OR
 
 %%
 

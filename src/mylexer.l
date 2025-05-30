@@ -2,9 +2,17 @@
 #include "myparser.tab.h"
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h> // 添加ctype.h用于大小写转换
 
 int yywrap(void) {
     return 1;
+}
+
+// 辅助函数：将字符串转换为小写
+void to_lower_case(char *str) {
+    for (int i = 0; str[i]; i++) {
+        str[i] = tolower(str[i]);
+    }
 }
 %}
 
@@ -23,41 +31,48 @@ string  \'[^']*\'
     return STRING;
 }
 
-"CREATE"        { return CREATE; }
-"USE"           { return USE; }
-"TABLE"         { return TABLE; }
-"SHOW"          { return SHOW; }
-"TABLES"        { return TABLES; }
-"INSERT"        { return INSERT; }
-"INTO"          { return INTO; }
-"VALUES"        { return VALUES; }
-"SELECT"        { return SELECT; }
-"FROM"          { return FROM; }
-"WHERE"         { return WHERE; }
-"UPDATE"        { return UPDATE; }
-"SET"           { return SET; }
-"DELETE"        { return DELETE; }
-"DROP"          { return DROP; }
-"EXIT"          { return EXIT; }
-"CHAR"          { return CHAR; }
-"INT"           { return INT; }
-"DATABASES"     { return DATABASES; }
-"="             { return EQ; }
-"!="            { return NE; }
-"<"             { return LT; }
-">"             { return GT; }
+(?i:create)    { return CREATE; }
+(?i:use)       { return USE; }
+(?i:table)     { return TABLE; }
+(?i:show)      { return SHOW; }
+(?i:tables)    { return TABLES; }
+(?i:insert)    { return INSERT; }
+(?i:into)      { return INTO; }
+(?i:values)    { return VALUES; }
+(?i:select)    { return SELECT; }
+(?i:from)      { return FROM; }
+(?i:where)     { return WHERE; }
+(?i:update)    { return UPDATE; }
+(?i:set)       { return SET; }
+(?i:delete)    { return DELETE; }
+(?i:drop)      { return DROP; }
+(?i:exit)      { return EXIT; }
+(?i:char)      { return CHAR; }
+(?i:int)       { return INT; }
+(?i:databases) { return DATABASES; }
+(?i:and)       { return AND; }
+(?i:or)        { return OR; }
 
-"*"             { return STAR; }
+"="     { return EQ; }
+"!="    { return NE; }
+"<"     { return LT; }
+">"     { return GT; }
 
-{id}            { yylval.str = strdup(yytext); return ID; }
-{number}        { yylval.str = strdup(yytext); return NUMBER; }
+"*"     { return STAR; }
 
-";"             { return ';'; }
-","             { return ','; }
-"("             { return '('; }
-")"             { return ')'; }
+{id}    { 
+    yylval.str = strdup(yytext); 
+    to_lower_case(yylval.str); // 转换为小写
+    return ID; 
+}
+{number} { yylval.str = strdup(yytext); return NUMBER; }
+
+";"     { return ';'; }
+","     { return ','; }
+"("     { return '('; }
+")"     { return ')'; }
 
 [ \t\r\n]+      ; // 跳过空白字符
-.               { printf("Unrecognized character: %s\n", yytext); }
+.       { printf("Unrecognized character: %s\n", yytext); }
 
 %%

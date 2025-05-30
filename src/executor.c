@@ -165,9 +165,12 @@ void select_from_table(const char* table_name, char** fields, int field_count, W
         }
 
         // 输出行
+         // 输出行
         for (int f = 0; f < col_count; ++f) {
-            printf("%s", row_fields[f]);
-            if (f < col_count - 1) printf(",");
+            if (select_all || (f < field_count && strcmp(headers[f], fields[f]) == 0)) {
+                printf("%s", row_fields[f]);
+                if (f < col_count - 1) printf(",");
+            }
         }
         printf("\n");
     }

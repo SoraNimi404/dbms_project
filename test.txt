@@ -22,7 +22,7 @@ EXIT;
 
 
 CREATE DATABASE test;
-USE DATABASE test;
+USE  test;
 SHOW TABLES;
 CREATE TABLE student (id INT, name CHAR(20));
 CREATE TABLE cxk_fans (id INT, name CHAR(20));
