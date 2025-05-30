@@ -30,12 +30,14 @@ WhereClause select_where;
 
 %type <str> value
 
+%token <str> STRING  
 %token <str> ID NUMBER
 %token CREATE DATABASE USE TABLE SHOW TABLES INSERT INTO VALUES
 %token SELECT FROM WHERE UPDATE SET DELETE DROP EXIT
 %token CHAR INT
 %token EQ NE LT GT
 %token DATABASES
+%token STAR
 
 %%
 
@@ -119,14 +121,21 @@ show_tables_stmt:
 insert_stmt:
      INSERT INTO ID VALUES '(' value_list ')' {
         insert_into_table($3, insert_values, insert_value_count);
-        // 清空缓存
         for (int i = 0; i < insert_value_count; ++i) {
             free(insert_values[i]);
         }
         insert_value_count = 0;
         free($3);
     }
+  |
+    INSERT INTO ID '(' field_list ')' VALUES '(' value_list ')' {
+        insert_into_table($3, insert_values, insert_value_count);
+        for (int i = 0; i < insert_value_count; ++i) free(insert_values[i]);
+        insert_value_count = 0;
+        free($3);
+    }
   ;
+
 
 value_list:
     value
@@ -139,6 +148,10 @@ value:
         free($1);
     }
   | ID {
+        insert_values[insert_value_count++] = strdup($1);
+        free($1);
+    }
+  | STRING {  // 处理带引号的字符串
         insert_values[insert_value_count++] = strdup($1);
         free($1);
     }
@@ -158,11 +171,21 @@ select_field_list:
         select_fields[select_field_count++] = strdup($1);
         free($1);
     }
+  | STAR {  // 处理通配符*
+        select_fields[select_field_count++] = strdup("*");
+        select_field_count = 1; // 设置为1表示选择所有字段
+    }
   | select_field_list ',' ID {
         select_fields[select_field_count++] = strdup($3);
         free($3);
     }
   ;
+
+field_list:
+    ID
+  | field_list ',' ID
+  ;
+
 
 opt_where_clause:
    /* empty */ { select_where.enabled = 0; }

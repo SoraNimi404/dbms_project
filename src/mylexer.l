@@ -12,11 +12,18 @@ digit   [0-9]
 letter  [a-zA-Z_]
 id      {letter}({letter}|{digit})*
 number  {digit}+
+string  \'[^']*\'
 
 %%
 
-"CREATE"        { return CREATE; }
+{string} {
+    // 提取引号内的内容（去掉首尾引号）
+    yylval.str = strdup(yytext + 1); // 跳过开头的引号
+    yylval.str[yyleng - 2] = '\0';   // 去掉结尾的引号
+    return STRING;
+}
 
+"CREATE"        { return CREATE; }
 "USE"           { return USE; }
 "TABLE"         { return TABLE; }
 "SHOW"          { return SHOW; }
@@ -40,24 +47,17 @@ number  {digit}+
 "<"             { return LT; }
 ">"             { return GT; }
 
-{id}            {
-    yylval.str = strdup(yytext);
-    return ID;
-}
+"*"             { return STAR; }
 
-{number}        {
-    yylval.str = strdup(yytext);
-    return NUMBER;
-}
+{id}            { yylval.str = strdup(yytext); return ID; }
+{number}        { yylval.str = strdup(yytext); return NUMBER; }
 
 ";"             { return ';'; }
 ","             { return ','; }
 "("             { return '('; }
 ")"             { return ')'; }
 
-[ \t\r\n]+      ; // skip whitespace
-.               {
-    printf("Unrecognized character: %s\n", yytext);
-}
+[ \t\r\n]+      ; // 跳过空白字符
+.               { printf("Unrecognized character: %s\n", yytext); }
 
 %%

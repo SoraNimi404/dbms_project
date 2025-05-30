@@ -54,32 +54,33 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    ID = 258,                      /* ID  */
-    NUMBER = 259,                  /* NUMBER  */
-    CREATE = 260,                  /* CREATE  */
-    DATABASE = 261,                /* DATABASE  */
-    USE = 262,                     /* USE  */
-    TABLE = 263,                   /* TABLE  */
-    SHOW = 264,                    /* SHOW  */
-    TABLES = 265,                  /* TABLES  */
-    INSERT = 266,                  /* INSERT  */
-    INTO = 267,                    /* INTO  */
-    VALUES = 268,                  /* VALUES  */
-    SELECT = 269,                  /* SELECT  */
-    FROM = 270,                    /* FROM  */
-    WHERE = 271,                   /* WHERE  */
-    UPDATE = 272,                  /* UPDATE  */
-    SET = 273,                     /* SET  */
-    DELETE = 274,                  /* DELETE  */
-    DROP = 275,                    /* DROP  */
-    EXIT = 276,                    /* EXIT  */
-    CHAR = 277,                    /* CHAR  */
-    INT = 278,                     /* INT  */
-    EQ = 279,                      /* EQ  */
-    NE = 280,                      /* NE  */
-    LT = 281,                      /* LT  */
-    GT = 282,                      /* GT  */
-    DATABASES = 283                /* DATABASES  */
+    STRING = 258,                  /* STRING  */
+    ID = 259,                      /* ID  */
+    NUMBER = 260,                  /* NUMBER  */
+    CREATE = 261,                  /* CREATE  */
+    DATABASE = 262,                /* DATABASE  */
+    USE = 263,                     /* USE  */
+    TABLE = 264,                   /* TABLE  */
+    SHOW = 265,                    /* SHOW  */
+    TABLES = 266,                  /* TABLES  */
+    INSERT = 267,                  /* INSERT  */
+    INTO = 268,                    /* INTO  */
+    VALUES = 269,                  /* VALUES  */
+    SELECT = 270,                  /* SELECT  */
+    FROM = 271,                    /* FROM  */
+    WHERE = 272,                   /* WHERE  */
+    UPDATE = 273,                  /* UPDATE  */
+    SET = 274,                     /* SET  */
+    DELETE = 275,                  /* DELETE  */
+    DROP = 276,                    /* DROP  */
+    EXIT = 277,                    /* EXIT  */
+    CHAR = 278,                    /* CHAR  */
+    INT = 279,                     /* INT  */
+    EQ = 280,                      /* EQ  */
+    NE = 281,                      /* NE  */
+    LT = 282,                      /* LT  */
+    GT = 283,                      /* GT  */
+    DATABASES = 284                /* DATABASES  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -92,7 +93,7 @@ union YYSTYPE
 
     char* str;
 
-#line 96 "myparser.tab.h"
+#line 97 "myparser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

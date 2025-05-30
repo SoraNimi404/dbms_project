@@ -138,7 +138,7 @@ void select_from_table(const char* table_name, char** fields, int field_count, W
 
     // 输出字段行（可过滤字段）
     printf("Rows:\n");
-
+    int select_all = (field_count == 1 && strcmp(fields[0], "*") == 0);
     while (fgets(line, sizeof(line), fp)) {
         trim_newline(line);
         char* row_fields[64];
