@@ -145,7 +145,7 @@ value:
   ;
 
 select_stmt:
-     SELECT field_list FROM ID opt_where_clause {
+    SELECT select_field_list FROM ID opt_where_clause {
         select_from_table($4, select_fields, select_field_count, &select_where);
         for (int i = 0; i < select_field_count; ++i) free(select_fields[i]);
         select_field_count = 0;
@@ -153,12 +153,12 @@ select_stmt:
     }
   ;
 
-field_list:
+select_field_list:
     ID {
         select_fields[select_field_count++] = strdup($1);
         free($1);
     }
-  | field_list ',' ID {
+  | select_field_list ',' ID {
         select_fields[select_field_count++] = strdup($3);
         free($3);
     }

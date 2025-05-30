@@ -165,7 +165,7 @@ enum yysymbol_kind_t
   YYSYMBOL_value_list = 44,                /* value_list  */
   YYSYMBOL_value = 45,                     /* value  */
   YYSYMBOL_select_stmt = 46,               /* select_stmt  */
-  YYSYMBOL_field_list = 47,                /* field_list  */
+  YYSYMBOL_select_field_list = 47,         /* select_field_list  */
   YYSYMBOL_opt_where_clause = 48,          /* opt_where_clause  */
   YYSYMBOL_condition_expr = 49,            /* condition_expr  */
   YYSYMBOL_update_stmt = 50,               /* update_stmt  */
@@ -587,9 +587,9 @@ static const char *const yytname[] =
   "')'", "','", "$accept", "input", "statements", "statement",
   "create_database_stmt", "use_database_stmt", "create_table_stmt",
   "create_field_list", "create_field", "show_tables_stmt", "insert_stmt",
-  "value_list", "value", "select_stmt", "field_list", "opt_where_clause",
-  "condition_expr", "update_stmt", "delete_stmt", "drop_table_stmt",
-  "drop_database_stmt", YY_NULLPTR
+  "value_list", "value", "select_stmt", "select_field_list",
+  "opt_where_clause", "condition_expr", "update_stmt", "delete_stmt",
+  "drop_table_stmt", "drop_database_stmt", YY_NULLPTR
 };
 
 static const char *
@@ -1288,9 +1288,9 @@ yyreduce:
 #line 1289 "myparser.tab.c"
     break;
 
-  case 30: /* select_stmt: SELECT field_list FROM ID opt_where_clause  */
+  case 30: /* select_stmt: SELECT select_field_list FROM ID opt_where_clause  */
 #line 148 "myparser.y"
-                                                {
+                                                      {
         select_from_table((yyvsp[-1].str), select_fields, select_field_count, &select_where);
         for (int i = 0; i < select_field_count; ++i) free(select_fields[i]);
         select_field_count = 0;
@@ -1299,7 +1299,7 @@ yyreduce:
 #line 1300 "myparser.tab.c"
     break;
 
-  case 31: /* field_list: ID  */
+  case 31: /* select_field_list: ID  */
 #line 157 "myparser.y"
        {
         select_fields[select_field_count++] = strdup((yyvsp[0].str));
@@ -1308,9 +1308,9 @@ yyreduce:
 #line 1309 "myparser.tab.c"
     break;
 
-  case 32: /* field_list: field_list ',' ID  */
+  case 32: /* select_field_list: select_field_list ',' ID  */
 #line 161 "myparser.y"
-                      {
+                             {
         select_fields[select_field_count++] = strdup((yyvsp[0].str));
         free((yyvsp[0].str));
     }
